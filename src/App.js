@@ -5,8 +5,6 @@ import Registration from './components/Registration';
 import Edit from './components/Edit';
 import Loading from './components/Loading';
 import Error from './components/Error';
-import ReactPaginate from 'react-paginate';
-import Chart from './components/Chart';
 
 function App() {
     const [users, setUsers] = useState([]);
@@ -16,22 +14,29 @@ function App() {
     const [showEdit, setShowEdit] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [search, setSearch] = useState('');
-    const [sort, setSort] = useState({ key: null, direction: 'asc' });
-    const [currentPage, setCurrentPage] = useState(0);
-    const itemsPerPage = 5;
+    const [filteredUsers, setFilteredUsers] = useState([]);
 
     useEffect(() => {
         fetchData();
     }, []);
 
     useEffect(() => {
-        setCurrentPage(0);
-    }, [sort, search]);
+        if (!search) {
+            setFilteredUsers(users);
+        } else {
+            setFilteredUsers(users.filter(user =>
+                user.name.toLowerCase().includes(search.toLowerCase()) ||
+                user.surname.toLowerCase().includes(search.toLowerCase()) ||
+                user.phone.toLowerCase().includes(search.toLowerCase()) ||
+                user.country.toLowerCase().includes(search.toLowerCase())
+            ));
+        }
+    }, [search, users]);
 
     const fetchData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('https://almargaryan.github.io/Api/src/data/data.json');
+            const response = await axios.get('https://almargaryan.github.io/Json/data.json');
             setUsers(response.data);
             setLoading(false);
         } catch (error) {
@@ -40,109 +45,46 @@ function App() {
         }
     };
 
-    const handleRegistration = (data) => {
-        try {
-            setLoading(true);
-            const newId = users.length + 1;
-            const newUser = { id: newId, ...data };
-            setUsers(prevUsers => [...prevUsers, newUser]);
-            setLoading(false);
-            setCurrentPage(Math.ceil((users.length + 1) / itemsPerPage) - 1);
-        } catch (error) {
-            setError("Failed to register user");
-        }
+    const handleRegistration = (formData) => {
+        const newId = users.length + 1;
+        const newUser = { id: newId, ...formData };
+        setUsers(prevUsers => [...prevUsers, newUser]);
     };
 
     const handleEdit = (user) => {
-        try {
-            setLoading(true);
-            setSelectedUser(user);
-            setShowEdit(true);
-            setLoading(false);
-        } catch (error) {
-            setError("Failed to edit user");
-        }
+        setSelectedUser(user);
+        setShowEdit(true);
     };
 
     const handleUpdate = (updatedUserData) => {
-        try {
-            setLoading(true);
-            setUsers(users.map(user => (user.id === updatedUserData.id ? updatedUserData : user)));
-            setShowEdit(false);
-            setLoading(false);
-        } catch (error) {
-            setError("Failed to update user");
-        }
+        setUsers(users.map(user => (user.id === updatedUserData.id ? updatedUserData : user)));
+        setShowEdit(false);
     };
 
     const handleSearch = (event) => {
-        try {
-            setLoading(true);
-            setSearch(event.target.value);
-            setLoading(false);
-        } catch (error) {
-            setError("Failed to search user");
-        }
+        setSearch(event.target.value);
     };
 
-    const handleSort = (key) => {
-        try {
-            setLoading(true);
-            let direction = 'asc';
-            if (sort.key === key && sort.direction === 'asc') {
-                direction = 'desc';
-            }
-            setSort({ key, direction });
-            setLoading(false);
-        } catch (error) {
-            setError("Failed to search user");
-        }
-    };
-
-    const sortedUsers = users.slice().sort((a, b) => {
-        if (sort.key === 'id') {
-            return sort.direction === 'asc' ? a.id - b.id : b.id - a.id;
-        } else if (sort.key === 'name') {
-            return sort.direction === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
-        }
-        return 0;
-    });
-
-    const filteredUsers = sortedUsers.filter(user =>
-        user.name.toLowerCase().includes(search.toLowerCase()) ||
-        user.surname.toLowerCase().includes(search.toLowerCase()) ||
-        user.phone.toLowerCase().includes(search.toLowerCase()) ||
-        user.country.toLowerCase().includes(search.toLowerCase())
-    );
-
-    const pageCount = Math.ceil(filteredUsers.length / itemsPerPage);
-    const offset = currentPage * itemsPerPage;
-    const currentPageData = filteredUsers.slice(offset, offset + itemsPerPage);
-
-    const handlePageClick = ({ selected }) => {
-        setCurrentPage(selected);
+    const handleCloseError = () => {
+        setError(null);
     };
 
     return (
-        <div className={"app"}>
-            <h1>
-                Users List
-                <button onClick={() => setShowRegistration(true)}>Add User <i className="fa fa-plus" aria-hidden="true"></i></button>
-            </h1>
-            <Chart users={users} />
-            <form className={"search"} onSubmit={(e) => { e.preventDefault(); }}>
+        <div>
+            <h1>Users</h1>
+            <form onSubmit={(e) => { e.preventDefault(); }}>
                 <input
                     type="text"
-                    placeholder="Search"
+                    placeholder="Search by name or surname"
                     value={search}
                     onChange={handleSearch}
                 />
-                <button type="button" onClick={() => setCurrentPage(0)}>Search</button>
+                <button type="button">Search</button>
             </form>
+            <button onClick={() => setShowRegistration(true)}>Add User</button>
             <UserTable
-                users={currentPageData}
+                users={filteredUsers}
                 onEditUser={handleEdit}
-                onSort={handleSort}
             />
             <Registration
                 show={showRegistration}
@@ -156,15 +98,7 @@ function App() {
                 onUpdate={handleUpdate}
             />
             <Loading loading={loading} />
-            {error && <Error message={error} onClose={() => setError(null)} />}
-            <ReactPaginate
-                previousLabel={'<<'}
-                nextLabel={'>>'}
-                breakLabel={'...'}
-                pageCount={pageCount}
-                onPageChange={handlePageClick}
-                className={"pages"}
-            />
+            {error && <Error message={error} onClose={handleCloseError} />}
         </div>
     );
 }
