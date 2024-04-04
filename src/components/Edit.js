@@ -8,10 +8,7 @@ const Edit = ({ show, user, onUpdate, onClose }) => {
         phone: '',
         country: ''
     });
-<<<<<<< HEAD
     const [errors, setErrors] = useState({});
-=======
->>>>>>> github/master
 
     useEffect(() => {
         if (user) {
@@ -25,7 +22,6 @@ const Edit = ({ show, user, onUpdate, onClose }) => {
         }
     }, [user]);
 
-<<<<<<< HEAD
     const handleChange = (event) => {
         const { name, value } = event.target;
         setData(prevData => ({
@@ -49,39 +45,15 @@ const Edit = ({ show, user, onUpdate, onClose }) => {
             } else {
                 alert("Avatar size must not be more than 20MB.");
             }
-=======
-    if (!show || !user) {
-        return null;
-    }
-
-    const handleChange = (event) => {
-        const { name, value, files } = event.target;
-        if (name === 'avatar' && files.length > 0) {
-            const file = files[0];
-            const reader = new FileReader();
-            reader.onload = () => {
-                setData(prevData => ({
-                    ...prevData,
-                    avatar: reader.result
-                }));
-            };
-            reader.readAsDataURL(file);
-        } else {
-            setData(prevData => ({
-                ...prevData,
-                [name]: value
-            }));
->>>>>>> github/master
         }
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-<<<<<<< HEAD
 
         const nameRegex = /^[A-Z][a-z]{0,49}$/;
         const surnameRegex = /^[A-Z][a-z]{0,49}$/;
-        const phoneRegex =  /\W{1}[0-9]{1,12}$/;
+        const phoneRegex = /^\d{10}$/;
 
         let isValid = true;
         const errors = {};
@@ -103,13 +75,10 @@ const Edit = ({ show, user, onUpdate, onClose }) => {
 
         setErrors(errors);
 
-=======
->>>>>>> github/master
         const updatedUser = {
             ...user,
             ...data
         };
-<<<<<<< HEAD
 
         if (isValid) {
             onUpdate(updatedUser);
@@ -123,7 +92,7 @@ const Edit = ({ show, user, onUpdate, onClose }) => {
 
     return (
             <div className={"registration"}>
-                <span onClick={onClose}>X</span>
+                <span onClick={onClose} ><i className="fa fa-times" aria-hidden="true"></i></span>
                 <h2>Edit User</h2>
                 <form onSubmit={handleSubmit} className={"registration_form"}>
                     <input type="text" name="name" placeholder="Name" value={data.name} onChange={handleChange}/>
@@ -141,28 +110,3 @@ const Edit = ({ show, user, onUpdate, onClose }) => {
 };
 
 export default Edit;
-=======
-        onUpdate(updatedUser);
-        onClose();
-    };
-
-    return (
-        <div>
-            <div>
-                <span onClick={onClose}>X</span>
-                <h2>Edit User</h2>
-                <form onSubmit={handleSubmit}>
-                    <input type="text" name="name" value={data.name} onChange={handleChange} />
-                    <input type="text" name="surname" value={data.surname} onChange={handleChange} />
-                    <input type="file" name="avatar" accept="image/png" onChange={handleChange} />
-                    <input type="text" name="phoneNumber" value={data.phone} onChange={handleChange} />
-                    <input type="text" name="country" value={data.country} onChange={handleChange} />
-                    <button type="submit">Update</button>
-                </form>
-            </div>
-        </div>
-    );
-};
-
-export default Edit;
->>>>>>> github/master

@@ -2,17 +2,13 @@ import React from 'react';
 
 const ErrorPopup = ({ message, onClose }) => {
     return (
-<<<<<<< HEAD
         <div className={"registration"}>
-=======
-        <div>
->>>>>>> github/master
             <div>
-                <span onClick={onClose}>X</span >
+                <span onClick={onClose}><i className="fa fa-times" aria-hidden="true"></i></span>
                 <h2>Error</h2>
                 <p>{message}</p>
-            </div >
-        </div >
+            </div>
+        </div>
     );
 };
 

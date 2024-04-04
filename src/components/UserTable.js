@@ -25,7 +25,7 @@ const UserTable = ({ users, onEditUser, onSort }) => {
                 </thead>
                 <tbody>
                 {users.map(user => (
-                    <tr key={user.id} style={{marginTop:0}}>
+                    <tr key={user.id}>
                         <td>{user.id}</td>
                         <td>{user.name}</td>
                         <td>{user.surname}</td>

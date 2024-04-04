@@ -8,10 +8,7 @@ const Registration = ({ show, onClose, onSubmit }) => {
         phone: '',
         country: ''
     });
-<<<<<<< HEAD
     const [errors, setErrors] = useState({});
-=======
->>>>>>> github/master
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -23,7 +20,6 @@ const Registration = ({ show, onClose, onSubmit }) => {
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
-<<<<<<< HEAD
         if (file) {
             if (file.size <= 20 * 1024 * 1024) {
                 const reader = new FileReader();
@@ -37,27 +33,15 @@ const Registration = ({ show, onClose, onSubmit }) => {
             } else {
                 alert("Avatar size must not be more than 20MB.");
             }
-=======
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setData(prevData => ({
-                ...prevData,
-                avatar: reader.result
-            }));
-        };
-        if (file) {
-            reader.readAsDataURL(file);
->>>>>>> github/master
         }
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-<<<<<<< HEAD
 
         const nameRegex = /^[A-Z][a-z]{0,49}$/;
         const surnameRegex = /^[A-Z][a-z]{0,49}$/;
-        const phoneRegex = /\W{1}[0-9]{1,12}$/;
+        const phoneRegex = /^\d{10}$/;
 
         let isValid = true;
         const errors = {};
@@ -73,7 +57,7 @@ const Registration = ({ show, onClose, onSubmit }) => {
         }
 
         if (!phoneRegex.test(data.phone)) {
-            errors.phone = "Phone number must be 7-12 digits long and start with +.";
+            errors.phone = "Phone number must be 10 digits long.";
             isValid = false;
         }
 
@@ -83,10 +67,6 @@ const Registration = ({ show, onClose, onSubmit }) => {
             onSubmit(data);
             onClose();
         }
-=======
-        onSubmit(data);
-        onClose();
->>>>>>> github/master
     };
 
     if (!show) {
@@ -94,9 +74,8 @@ const Registration = ({ show, onClose, onSubmit }) => {
     }
 
     return (
-<<<<<<< HEAD
-        <div className={"registration"}>
-                <span onClick={onClose}><i className="fa fa-times" aria-hidden="true"></i></span>
+            <div className={"registration"}>
+                <span onClick={onClose} ><i className="fa fa-times" aria-hidden="true"></i></span>
                 <h2>Registration</h2>
                 <form onSubmit={handleSubmit} className={"registration_form"}>
                     <input type="text" name="name" placeholder="Name" value={data.name} onChange={handleChange}/>
@@ -109,22 +88,7 @@ const Registration = ({ show, onClose, onSubmit }) => {
                     <input type="text" name="country" placeholder="Country" value={data.country} onChange={handleChange}/>
                     <button type="submit">Register</button>
                 </form>
-=======
-        <div>
-            <div>
-                <span onClick={onClose}>X</span>
-                <h2>Registration</h2>
-                <form onSubmit={handleSubmit}>
-                    <input type="text" name="name" placeholder="Name" value={data.name} onChange={handleChange}/>
-                    <input type="text" name="surname" placeholder="Surname" value={data.surname} onChange={handleChange}/>
-                    <input type="file" name="avatar" accept="image/png" onChange={handleFileChange}/>
-                    <input type="text" name="phone" placeholder="Phone Number" value={data.phone} onChange={handleChange}/>
-                    <input type="text" name="country" placeholder="Country" value={data.country} onChange={handleChange}/>
-                    <button type="submit">Register</button>
-                </form>
             </div>
->>>>>>> github/master
-        </div>
     );
 };
 
