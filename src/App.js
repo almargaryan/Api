@@ -61,11 +61,11 @@ function App() {
         setShowEdit(false);
     };
 
-    const handleSearchChange = (event) => {
+    const handleSearch = (event) => {
         setSearch(event.target.value);
     };
 
-    const handleCloseErrorPopup = () => {
+    const handleCloseError = () => {
         setError(null);
     };
 
@@ -76,8 +76,8 @@ function App() {
                 <input
                     type="text"
                     placeholder="Search by name or surname"
-                    value={searchQuery}
-                    onChange={handleSearchChange}
+                    value={search}
+                    onChange={handleSearch}
                 />
                 <button type="button">Search</button>
             </form>
@@ -98,7 +98,7 @@ function App() {
                 onUpdate={handleUpdate}
             />
             <Loading loading={loading} />
-            {error && <Error message={error} onClose={handleCloseErrorPopup} />}
+            {error && <Error message={error} onClose={handleCloseError} />}
         </div>
     );
 }
