@@ -1,0 +1,149 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.app{
+    width: 100%;
+    height: 170vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #201734;
+    color: #CEB9FA;
+}
+
+.app h1{
+    width: 300px;
+    height: 100px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.app button{
+    width: 100px;
+    height: 25px;
+    background: #8168B6;
+    color: #CEB9FA;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.search{
+    width: 350px;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search input{
+    width: 200px;
+    height: 25px;
+    background: #CEB9FA;
+    border: none;
+    display: flex;
+    align-items: center;
+}
+
+.chart{
+    width: 500px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background: #CEB9FA;
+    color: #201734;
+}
+.countryCount{
+    width: 500px;
+    height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.bar{
+    width: 100px;
+    height: 50px;
+    border: 2px solid #201734;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.table{
+    width: 100%;
+    height: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.table table{
+    width: 90%;
+    height: 700px;
+    border: 1px solid #201734;
+    text-align: center;
+    background: #CEB9FA;
+    color: #201734;
+}
+.table thead{
+    font-size: 25px;
+}
+.buts_table{
+    width: 90%;
+    display: flex;
+}
+.registration{
+    width: 500px;
+    height: 300px;
+    background: #201734;
+    position: absolute;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 5px solid #CEB9FA;
+}
+.registration_form{
+    width: 100%;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.registration_form input{
+    width: 80%;
+    height: 25px;
+    background: #CEB9FA;
+    color: #201734;
+}
+.pages{
+    width: 500px;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+}
+.pages li{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+    background: #CEB9FA;
+    color: #201734;
+    font-size: 23px;
+    font-weight: bold;
+}

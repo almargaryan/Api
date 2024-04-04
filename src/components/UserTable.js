@@ -1,27 +1,20 @@
-import React, {useState} from 'react';
-import ReactPaginate from "react-paginate";
+import React from 'react';
 
-const UserTable = ({ users, onEditUser }) => {
-
-    const [currentPage, setCurrentPage] = useState(0);
-    const totalPages = Math.ceil(users.length / 5);
-    const startIndex = currentPage * 5;
-    const endIndex = Math.min(startIndex + 5, users.length);
-    const currentUsers = users.slice(startIndex, endIndex);
-
-    const handlePageChange = ({ selected }) => {
-        setCurrentPage(selected);
-    };
-
-    if (!users || users.length === 0) {
-        return <div>No users found</div>;
-    }
-
+const UserTable = ({ users, onEditUser, onSort }) => {
     return (
-        <div>
-            <table>
+        <div className={"table"}>
+            <div className={"buts_table"}>
+                <button onClick={() => onSort('id')} style={{width:"65px", height:"35px" ,border:"2px solid #201734"}}>
+                    Sort by ID
+                </button>
+                <button onClick={() => onSort('name')} style={{width:"140px",height:"35px", border:"2px solid #201734"}}>
+                    Sort by Name
+                </button>
+            </div>
+            <table border={"1px solid #201734"}>
                 <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Surname</th>
                     <th>Avatar</th>
@@ -31,27 +24,21 @@ const UserTable = ({ users, onEditUser }) => {
                 </tr>
                 </thead>
                 <tbody>
-                {currentUsers.map(user => (
-                    <tr key={user.id}>
+                {users.map(user => (
+                    <tr key={user.id} style={{marginTop:0}}>
                         <td>{user.id}</td>
                         <td>{user.name}</td>
                         <td>{user.surname}</td>
-                        <td><img src={user.avatar} width={"124px"} height={"124px"}/></td>
+                        <td><img src={user.avatar} width={"124px"} height={"124px"} alt="avatar" /></td>
                         <td>{user.phone}</td>
                         <td>{user.country}</td>
                         <td>
-                            <button onClick={() => onEditUser(user)}>Edit</button>
+                            <button onClick={() => onEditUser(user)} style={{margin:"auto"}}>Edit</button>
                         </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
-            <ReactPaginate
-                pageCount={totalPages}
-                pageRangeDisplayed={5}
-                marginPagesDisplayed={2}
-                onPageChange={handlePageChange}
-            />
         </div>
     );
 };
