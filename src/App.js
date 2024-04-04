@@ -45,9 +45,9 @@ function App() {
         }
     };
 
-    const handleRegistration = (formData) => {
+    const handleRegistration = (data) => {
         const newId = users.length + 1;
-        const newUser = { id: newId, ...formData };
+        const newUser = { id: newId, ...data };
         setUsers(prevUsers => [...prevUsers, newUser]);
     };
 
